@@ -66,3 +66,30 @@ module.exports.detail = async (req, res) => {
     res.json("Không tìm thấy !");
   }
 };
+
+// [GET] /api/v1/change-status/:id
+module.exports.changeStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const status = req.body.status;
+
+    await Task.updateOne(
+      {
+        _id: id,
+      },
+      {
+        status: status,
+      }
+    );
+
+    res.json({
+      code: 200,
+      message: "Cập nhật trạng thái thành công !",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Không tồn tại !",
+    });
+  }
+};
