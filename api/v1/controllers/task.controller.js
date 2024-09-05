@@ -135,7 +135,7 @@ module.exports.changeMulti = async (req, res) => {
   }
 };
 
-// [GET] /api/v1/create
+// [POST] /api/v1/create
 module.exports.create = async (req, res) => {
   try {
     const task = new Task(req.body);
@@ -145,6 +145,25 @@ module.exports.create = async (req, res) => {
       code: 200,
       message: "Tạo thành công !",
       data: data,
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Lỗi !",
+    });
+  }
+};
+
+// [PATCH] /api/v1/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Task.updateOne({ _id: id }, req.body);
+
+    res.json({
+      code: 200,
+      message: "Cập nhật thành công !",
     });
   } catch (error) {
     res.json({
